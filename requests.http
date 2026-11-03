@@ -1,0 +1,218 @@
+### ===================================================================
+### Retail Management Backend - HTTP Request Collection
+### Base URL: http://localhost:8080/api
+### ===================================================================
+
+@baseUrl = http://localhost:8080/api
+
+### -------------------------------------------------------------------
+### 1. STORES ENDPOINTS
+### -------------------------------------------------------------------
+
+### Get All Stores
+GET {{baseUrl}}/stores
+Accept: application/json
+
+###
+
+### Get Store by ID
+GET {{baseUrl}}/stores/1
+Accept: application/json
+
+###
+
+### Add New Store
+POST {{baseUrl}}/stores
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Midtown Tech Outlet",
+  "addressLine1": "500 5th Avenue",
+  "addressLine2": "Suite 210",
+  "addressLine3": "New York, NY 10110"
+}
+
+### -------------------------------------------------------------------
+### 2. PRODUCTS ENDPOINTS
+### -------------------------------------------------------------------
+
+### Get All Products
+GET {{baseUrl}}/products
+Accept: application/json
+
+###
+
+### Get Product by ID
+GET {{baseUrl}}/products/1
+Accept: application/json
+
+###
+
+### Search Products (partial name and category filter)
+GET {{baseUrl}}/products/search?name=Galaxy&category=Mobile
+Accept: application/json
+
+###
+
+### Search Products ("All category" / no category filter)
+GET {{baseUrl}}/products/search?name=Pro&category=All category
+Accept: application/json
+
+###
+
+### Create Product
+POST {{baseUrl}}/products
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Sony WH-1000XM6 Headphones",
+  "category": "Accessories",
+  "price": 429.99,
+  "sku": "ACC-SNY-XM6"
+}
+
+###
+
+### Update Product
+PUT {{baseUrl}}/products/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Samsung Galaxy S24 Ultra 512GB",
+  "category": "Mobile",
+  "price": 1249.99,
+  "sku": "MOB-SAM-S24U"
+}
+
+###
+
+### Delete Product
+DELETE {{baseUrl}}/products/15
+
+### -------------------------------------------------------------------
+### 3. INVENTORY ENDPOINTS
+### -------------------------------------------------------------------
+
+### Get Inventory by Store ID
+GET {{baseUrl}}/inventory/store/1
+Accept: application/json
+
+###
+
+### Search Inventory by Store, Name, and Category
+GET {{baseUrl}}/inventory/store/1/search?name=Galaxy&category=Mobile
+Accept: application/json
+
+###
+
+### Add / Upsert Inventory Record
+POST {{baseUrl}}/inventory
+Content-Type: application/json
+Accept: application/json
+
+{
+  "productId": 3,
+  "storeId": 1,
+  "stockLevel": 50
+}
+
+###
+
+### Update Stock Level for Product in Store
+PUT {{baseUrl}}/inventory/store/1/product/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "stockLevel": 42
+}
+
+###
+
+### Delete Inventory Record
+DELETE {{baseUrl}}/inventory/store/1/product/15
+
+### -------------------------------------------------------------------
+### 4. ORDERS ENDPOINTS
+### -------------------------------------------------------------------
+
+### Validate Store Exists
+GET {{baseUrl}}/orders/validate/1
+Accept: application/json
+
+###
+
+### Validate Non-existent Store
+GET {{baseUrl}}/orders/validate/999
+Accept: application/json
+
+###
+
+### Place an Order (Find or create customer, check stock, decrement, persist order)
+POST {{baseUrl}}/orders
+Content-Type: application/json
+Accept: application/json
+
+{
+  "storeId": 1,
+  "customer": {
+    "name": "Sarah Connor",
+    "email": "sarah.connor@example.com",
+    "phone": "+1-415-555-8899"
+  },
+  "items": [
+    {
+      "productId": 1,
+      "quantity": 1
+    },
+    {
+      "productId": 13,
+      "quantity": 2
+    }
+  ]
+}
+
+### -------------------------------------------------------------------
+### 5. REVIEWS ENDPOINTS (MongoDB)
+### -------------------------------------------------------------------
+
+### Create Product Review
+POST {{baseUrl}}/reviews
+Content-Type: application/json
+Accept: application/json
+
+{
+  "productId": 1,
+  "customerName": "TechEnthusiast88",
+  "rating": 5,
+  "comment": "Outstanding display, brilliant cameras, and all-day battery life!"
+}
+
+###
+
+### Get Reviews by Product ID
+GET {{baseUrl}}/reviews/product/1
+Accept: application/json
+
+### -------------------------------------------------------------------
+### 6. ANALYTICS & REPORTS (MySQL Stored Procedures)
+### -------------------------------------------------------------------
+
+### Monthly Sales for Each Store
+GET {{baseUrl}}/reports/monthly-sales?year=2025&month=3
+Accept: application/json
+
+###
+
+### Aggregate Sales for Entire Company
+GET {{baseUrl}}/reports/company-sales?year=2025&month=3
+Accept: application/json
+
+###
+
+### Top Selling Products By Category (note: month first, then year)
+GET {{baseUrl}}/reports/top-products?month=3&year=2025
+Accept: application/json

@@ -1,0 +1,32 @@
+# Maven build output
+target/
+*.jar
+*.war
+*.class
+
+# Maven wrapper (keep our custom wrappers)
+!mvn.cmd
+!mvnw.cmd
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Spring Boot local/dev config (don't expose credentials)
+application-local.properties
+
+# Environment files
+.env
