@@ -1,5 +1,6 @@
 package com.retail.management.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -22,5 +23,6 @@ public class CustomerDTO {
     @Email(message = "Valid email is required")
     private String email;
 
+    @JsonAlias({"mobile", "phone", "phoneNumber"})
     private String phone;
 }

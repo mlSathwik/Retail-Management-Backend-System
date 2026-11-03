@@ -88,10 +88,12 @@ public class OrderService {
         BigDecimal grandTotal = BigDecimal.ZERO;
         List<OrderItem> orderItems = new ArrayList<>();
 
+        LocalDateTime effectiveOrderDate = request.getOrderDate() != null ? request.getOrderDate() : LocalDateTime.now();
+
         OrderDetails orderDetails = OrderDetails.builder()
                 .customer(customer)
                 .store(store)
-                .orderDate(LocalDateTime.now())
+                .orderDate(effectiveOrderDate)
                 .totalPrice(BigDecimal.ZERO)
                 .items(new ArrayList<>())
                 .build();
